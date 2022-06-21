@@ -21,6 +21,7 @@ class HomeFrame(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
+        self.grid_columnconfigure(3, weight=1)
 
         self.imageHeart = Image.open('cardiogram2.png')
         self.image_resize = self.imageHeart.resize((70, 70), Image.ANTIALIAS)
@@ -83,13 +84,29 @@ class HomeFrame(tk.Frame):
         # self.title = tk.Label(self, text="SELECT PATIENT", font=('Helvetica bold', 40), background=color_background)
 
         self.scrollbar = tk.Scrollbar(self,
+
                                       orient='vertical',
                                       background=color_special,
                                       )
 
+        self.listTitle = tk.Label(self,
+
+                                  text="Select a patient to view details",
+                                  background=color_background,
+                                  font=(my_font, 18, 'bold'),
+                                  fg=color_text
+                                  )
+
         self.my_listbox = tk.Listbox(self,
                                      width=50,
-                                     height=5,
+
+                                     font=(my_font, 12, 'bold'),
+                                     fg=color_text,
+                                     background='white',
+
+                                     selectbackground=color_special,
+                                     selectforeground='white',
+
                                      yscrollcommand=self.scrollbar.set)
 
         self.detailButton = tk.Button(self,
@@ -117,10 +134,12 @@ class HomeFrame(tk.Frame):
         self.searchButton.grid(row=0, column=1, sticky='e', padx=10)
         self.nameInput.grid(row=0, column=2, sticky='w')
 
-        self.my_listbox.grid(row=3, column=0, columnspan=3, pady=50)
-        self.scrollbar.grid(row=3, column=1, sticky=tk.N + tk.S, pady=50)
+        self.listTitle.grid(row=2, column=1, columnspan=2, sticky='s', pady=(50,0), padx=(40,0))
+        self.my_listbox.grid(row=3, column=1, columnspan=2, sticky='e', pady=(0,20))
+        self.scrollbar.grid(row=3, column=3, sticky="w")
 
-        self.detailButton.grid(row=4, column=0, columnspan=2, sticky='e', padx=100)
+        self.detailButton.grid(row=4, column=2, columnspan=1, sticky='e')
+
 
         self.patients = self.getPatientsNames(client)
         getFamilyName = lambda patient: patient['name'][0].family
@@ -130,7 +149,6 @@ class HomeFrame(tk.Frame):
     def getPatientsNames(self, client):
         resources = client.resources('Patient')
         patients = resources.search().fetch_all()
-        # patients = resources.fetch()
         return patients
 
     def detail(self):
