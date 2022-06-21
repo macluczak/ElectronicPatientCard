@@ -57,6 +57,7 @@ class HomeFrame(tk.Frame):
                                   anchor="w")
 
         self.searchButton = tk.Button(self,
+                                      relief="flat",
                                       text="Search",
                                       font=(my_font, 10, 'bold'),
                                       compound='top',
@@ -81,10 +82,8 @@ class HomeFrame(tk.Frame):
                                          image=self.love
                                          )
 
-        # self.title = tk.Label(self, text="SELECT PATIENT", font=('Helvetica bold', 40), background=color_background)
 
         self.scrollbar = tk.Scrollbar(self,
-
                                       orient='vertical',
                                       background=color_special,
                                       )
@@ -100,9 +99,11 @@ class HomeFrame(tk.Frame):
         self.my_listbox = tk.Listbox(self,
                                      width=50,
 
+
                                      font=(my_font, 12, 'bold'),
                                      fg=color_text,
                                      background='white',
+                                     relief="flat",
 
                                      selectbackground=color_special,
                                      selectforeground='white',
@@ -110,6 +111,7 @@ class HomeFrame(tk.Frame):
                                      yscrollcommand=self.scrollbar.set)
 
         self.detailButton = tk.Button(self,
+                                      relief="groove",
                                       text="Details",
                                       command=self.detail,
                                       background='white',
@@ -128,17 +130,18 @@ class HomeFrame(tk.Frame):
 
         self.nav_label.grid(row=0, column=0, sticky="w", columnspan=1)
 
-        # self.title.grid(row=1, column=0, columnspan=2)
+
         self.scrollbar.config(command=self.my_listbox.yview)
 
         self.searchButton.grid(row=0, column=1, sticky='e', padx=10)
         self.nameInput.grid(row=0, column=2, sticky='w')
 
         self.listTitle.grid(row=2, column=1, columnspan=2, sticky='s', pady=(50,0), padx=(40,0))
-        self.my_listbox.grid(row=3, column=1, columnspan=2, sticky='e', pady=(0,20))
-        self.scrollbar.grid(row=3, column=3, sticky="w")
+        self.scrollbar.grid(row=3, column=3, sticky= tk.N + tk.S)
+        self.my_listbox.grid(row=3, column=1, columnspan=2, sticky='e')
 
-        self.detailButton.grid(row=4, column=2, columnspan=1, sticky='e')
+
+        self.detailButton.grid(row=4, column=2, columnspan=1, sticky='e',pady=(10,0))
 
 
         self.patients = self.getPatientsNames(client)
