@@ -17,7 +17,18 @@ class Info(tk.Frame):
         self.observations = []
         self.getMedicalData()
 
-        my_font = font.Font(family="Lato")
+        font_LargeBolt = font.Font(family="Lato", size=20, weight="bold")
+        font_MediumBolt = font.Font(family="Lato", size=16, weight="bold")
+        font_SmallBolt = font.Font(family="Lato", size=12, weight="bold")
+        font_XSmallBolt = font.Font(family="Lato", size=10, weight="bold")
+        font_XXSmallBolt = font.Font(family="Lato", size=8, weight="bold")
+
+        font_Large = font.Font(family="Lato", size=20, weight="normal")
+        font_Medium = font.Font(family="Lato", size=16, weight="normal")
+        font_Small = font.Font(family="Lato", size=12, weight="normal")
+        font_XSmall = font.Font(family="Lato", size=10, weight="normal")
+        font_XXSmall = font.Font(family="Lato", size=8, weight="normal")
+
         color_background = "#EDF2F4"  # light gray
         color_primary = "#D90429"  # dark red
         color_secondary = "#EF233C"  # red
@@ -59,7 +70,7 @@ class Info(tk.Frame):
 
         self.nav_label = tk.Label(self,
                                   text="Electronic Patient Card",
-                                  font=(my_font, 20, 'bold'),
+                                  font=font_LargeBolt,
                                   background=color_secondary,
                                   image=self.userIcon,
                                   compound='left',
@@ -70,16 +81,16 @@ class Info(tk.Frame):
 
         self.nav_gender = tk.Label(self,
                                    text="Electronic Patient Card",
-                                   font=(my_font, 20, 'bold'),
+                                   font=font_Large,
                                    background=color_secondary,
-                                   padx=20,
+
                                    pady=20,
                                    fg="white",
                                    anchor="w")
 
         self.nav_data = tk.Label(self,
                                  text="Electronic Patient Card",
-                                 font=(my_font, 20, 'bold'),
+                                 font=font_Large,
                                  background=color_secondary,
                                  padx=20,
                                  pady=20,
@@ -89,7 +100,7 @@ class Info(tk.Frame):
         self.scrollbarListbox = tk.Scrollbar(self,
                                              orient='vertical')
         self.detailsListbox = tk.Listbox(self,
-                                         font=(my_font, 8, 'normal'),
+                                         font=font_XXSmall,
                                          fg=color_text,
                                          background='white',
                                          relief="flat",
@@ -102,7 +113,7 @@ class Info(tk.Frame):
         self.backButton = tk.Button(self,
                                     relief="groove",
                                     text="Back",
-                                    font=(my_font, 10, 'bold'),
+                                    font=font_XSmallBolt,
                                     compound='top',
                                     fg=color_text,
                                     activeforeground=color_background,
@@ -116,15 +127,17 @@ class Info(tk.Frame):
         self.patientIDLabel = tk.Label(self,
                                        background=color_background,
                                        text="",
-                                       font=(my_font, 10, 'normal'), )
+                                       font=font_Small)
 
         self.dropDownMonths = tk.OptionMenu(self,
+
                                             self.clicked,
                                             *self.months)
 
         self.selectMonthButton = tk.Button(self,
 
                                            text="SELECT MONTH",
+
                                            command=self.clearAndFillNewMonth)
 
         self.fillListBox(self.observationToDateDict[self.months[0]])

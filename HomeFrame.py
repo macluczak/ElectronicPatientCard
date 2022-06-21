@@ -1,19 +1,30 @@
-import tkinter.font as font
 import tkinter as tk
+import tkinter.font as font
 from PIL import Image, ImageTk
-from fhirpy import SyncFHIRClient
 
 
 class HomeFrame(tk.Frame):
     def __init__(self, parent, client):
         tk.Frame.__init__(self, parent)
 
-        my_font = font.Font(family="Lato")
+
         color_background = "#EDF2F4"  # light gray
         color_primary = "#D90429"  # dark red
         color_secondary = "#EF233C"  # red
         color_text = "#2B2D42"  # light black
         color_special = "#8D99AE"  # gray
+
+        font_LargeBolt = font.Font(family="Lato", size=20, weight="bold")
+        font_MediumBolt = font.Font(family="Lato", size=16, weight="bold")
+        font_SmallBolt = font.Font(family="Lato", size=12, weight="bold")
+        font_XSmallBolt = font.Font(family="Lato", size=10, weight="bold")
+        font_XXSmallBolt = font.Font(family="Lato", size=8, weight="bold")
+
+        font_Large = font.Font(family="Lato", size=20, weight="normal")
+        font_Medium = font.Font(family="Lato", size=16, weight="normal")
+        font_Small = font.Font(family="Lato", size=12, weight="normal")
+        font_XSmall = font.Font(family="Lato", size=10, weight="normal")
+        font_XXSmall = font.Font(family="Lato", size=8, weight="normal")
 
         self.config(background=color_background)
         self.client = client
@@ -46,7 +57,7 @@ class HomeFrame(tk.Frame):
 
         self.nav_label = tk.Label(self,
                                   text="Electronic Patient Card",
-                                  font=(my_font, 20, 'bold'),
+                                  font=font_LargeBolt,
                                   width="600",
                                   background=color_secondary,
                                   image=self.logo,
@@ -60,7 +71,7 @@ class HomeFrame(tk.Frame):
         self.searchButton = tk.Button(self,
                                       relief="flat",
                                       text="Search",
-                                      font=(my_font, 10, 'bold'),
+                                      font=font_XSmallBolt,
                                       compound='top',
                                       fg='white',
                                       activeforeground=color_background,
@@ -73,7 +84,7 @@ class HomeFrame(tk.Frame):
                                       )
         self.nameInput = tk.Entry(self,
 
-                                  font=(my_font, 18, 'bold'),
+                                  font=font_LargeBolt,
                                   fg=color_text
 
                                   )
@@ -93,7 +104,7 @@ class HomeFrame(tk.Frame):
 
                                   text="Select a patient to view details",
                                   background=color_background,
-                                  font=(my_font, 18, 'bold'),
+                                  font=font_LargeBolt,
                                   fg=color_text
                                   )
 
@@ -101,7 +112,7 @@ class HomeFrame(tk.Frame):
                                      width=50,
 
 
-                                     font=(my_font, 12, 'bold'),
+                                     font=font_Small,
                                      fg=color_text,
                                      background='white',
                                      relief="flat",
@@ -117,7 +128,7 @@ class HomeFrame(tk.Frame):
                                       command=self.detail,
                                       background='white',
                                       activebackground=color_special,
-                                      font=(my_font, 10, 'bold'),
+                                      font=font_XSmallBolt,
                                       compound='top',
                                       fg=color_text,
                                       activeforeground=color_background,
