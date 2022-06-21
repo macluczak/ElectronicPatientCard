@@ -27,6 +27,9 @@ class Info(tk.Frame):
         self.months = list(self.observationToDateDict.keys())
         self.clicked.set(self.months[0])
 
+
+
+
         
 
         self.backButton = tk.Button(self, text="BACK", command=self.back)

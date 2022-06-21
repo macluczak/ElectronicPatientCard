@@ -14,38 +14,34 @@ import ssl
 class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        aiohttp_config = {
+        _ = {
             "ssl": ssl.create_default_context(),
             "timeout": aiohttp.ClientTimeout(total=100),
         }
-        requests_config = {
+        _ = {
             "verify": False,
             "allow_redirects": True,
             "timeout": 60,
         }
-        self.icon = tk.PhotoImage(file='icon2.png')
+        icon = tk.PhotoImage(file='cardiogram1.png')
 
         HAPI_BASE_URL = "http://localhost:8080/baseR4"
-        self.client = SyncFHIRClient(HAPI_BASE_URL)
 
         self.grid_columnconfigure(0, weight=1)
+        self.client = SyncFHIRClient(HAPI_BASE_URL)
         self.title("Electronic Patient Card")
-        self.geometry("1400x1000")
-        self.iconphoto(True, self.icon)
-
-        # self.myCanvas = tk.Canvas(self)
-        # self.myCanvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-
-        # self.frameScrollbar = tk.Scrollbar(self, orient=tk.VERTICAL, command=self.myCanvas.yview)
-        # self.frameScrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-        # self.myCanvas.configure(yscrollcommand=self.frameScrollbar.set)
-        # self.myCanvas.bind('<Configure>', lambda e: self.myCanvas.configure(scrollregion=self.myCanvas.bbox("all")))
+        self.geometry("1200x675")
+        self.iconphoto(True, icon)
 
         self.infoFrame = type('info.Info', (), {})
         self.homeFrame = hf.HomeFrame(self, self.client)
-        # self.myCanvas.create_window((0,0), window=self.homeFrame, anchor="nw")
-        self.homeFrame.pack(fill='both', expand=1)
+
+
+        # self.homeFrame.pack(fill='both', expand=1)
+        self.homeFrame.place(x=0, y=0, height= 675, width=1200)
+
+
+
         # observationsResources = self.client.resources('Observation')
         # observationsResources = observationsResources.search()
         # self.observations = observationsResources.fetch()
@@ -65,6 +61,7 @@ class App(tk.Tk):
 def main():
     app = App()
     app.mainloop()
+
 
 
 if __name__ == "__main__":
