@@ -18,6 +18,7 @@ class HomeFrame(tk.Frame):
         self.config(background=color_background)
         self.client = client
         self.parent = parent
+
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)

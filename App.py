@@ -50,11 +50,11 @@ class App(tk.Tk):
 
     def changeToPatientInfo(self, patient):
         self.infoFrame = info.Info(self, self.client, patient)
-        self.infoFrame.place(x=0, y=0, height= 675, width=1200)
+        self.infoFrame.pack(fill='both', expand=1)
         self.homeFrame.forget()
 
     def toPatientsList(self):
-        self.homeFrame.place(x=0, y=0, height= 675, width=1200)
+        self.homeFrame.pack(fill='both', expand=1)
         self.infoFrame.forget()
 
 
