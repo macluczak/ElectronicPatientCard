@@ -1,13 +1,10 @@
-from statistics import median
 import tkinter as tk
-from turtle import width
-from fhirpy import AsyncFHIRClient
-from pyparsing import col
-from collections import defaultdict
-import matplotlib.pyplot as plt
+import tkinter.font as font
+from PIL import Image, ImageTk
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
+                                               NavigationToolbar2Tk)
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
-NavigationToolbar2Tk)
+
 
 class Info(tk.Frame):
     def __init__(self, parent, client, patient):
@@ -20,12 +17,27 @@ class Info(tk.Frame):
         self.observations = []
         self.getMedicalData()
 
+        color_background = "#EDF2F4"  # light gray
+        color_primary = "#D90429"  # dark red
+        color_secondary = "#EF233C"  # red
+        color_text = "#2B2D42"  # light black
+        color_special = "#8D99AE"  # gray
+
+        self.imageScope = Image.open('love.png')
+        self.image_resize = self.imageScope.resize((650, 650), Image.ANTIALIAS)
+        self.love = ImageTk.PhotoImage(self.image_resize)
+
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
         self.clicked = tk.StringVar(self)
         self.months = list(self.observationToDateDict.keys())
         self.clicked.set(self.months[0])
+
+        self.background_label = tk.Label(self,
+                                         background=color_background,
+                                         image=self.love
+                                         )
 
 
 
@@ -56,7 +68,8 @@ class Info(tk.Frame):
         self.patientBirthDateLabel['text'] = self.patiendBirthDateText
         self.patientGenderLabel['text'] = self.patientGenderText
         self.patientIDLabel['text'] = self.patientIDText
-        
+
+        self.background_label.place(x=-250, y=120, width=650, height=650)
 
         self.title.grid(row=0, column=0, columnspan=2)
 
