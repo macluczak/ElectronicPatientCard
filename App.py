@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 from rsa import verify
 import HomeFrame as hf
 import Info as info
@@ -22,11 +23,15 @@ class App(tk.Tk):
             "allow_redirects": True,
             "timeout": 60,
         }
-        self.HAPI_BASE_URL = "http://localhost:8080/baseR4"
-        self.client = SyncFHIRClient(self.HAPI_BASE_URL)
+        self.icon = tk.PhotoImage(file='icon2.png')
+
+        HAPI_BASE_URL = "http://localhost:8080/baseR4"
+        self.client = SyncFHIRClient(HAPI_BASE_URL)
 
         self.grid_columnconfigure(0, weight=1)
+        self.title("Electronic Patient Card")
         self.geometry("1400x1000")
+        self.iconphoto(True, self.icon)
 
         # self.myCanvas = tk.Canvas(self)
         # self.myCanvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
