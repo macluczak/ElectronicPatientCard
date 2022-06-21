@@ -99,6 +99,8 @@ class Info(tk.Frame):
 
         self.scrollbarListbox = tk.Scrollbar(self,
                                              orient='vertical')
+        self.scrollbarHorListbox = tk.Scrollbar(self,
+                                                orient='horizontal')
         self.detailsListbox = tk.Listbox(self,
                                          font=font_XXSmall,
                                          fg=color_text,
@@ -108,7 +110,9 @@ class Info(tk.Frame):
                                          selectforeground='white',
                                          width=90,
                                          height=20,
-                                         yscrollcommand=self.scrollbarListbox.set)
+                                         yscrollcommand=self.scrollbarListbox.set,
+                                         xscrollcommand=self.scrollbarHorListbox.set
+                                         )
 
         self.backButton = tk.Button(self,
                                     relief="groove",
@@ -162,6 +166,8 @@ class Info(tk.Frame):
 
         self.detailsListbox.grid(row=1, column=0, columnspan=2, padx=(30, 0), pady=(80, 0))
         self.scrollbarListbox.grid(row=1, column=2, sticky=tk.N + tk.S, pady=(130, 50))
+        self.scrollbarHorListbox.grid(row=1, column=0, rowspan=2, columnspan=2, sticky=tk.SE + tk.SW, padx=(55, 30),
+                                      pady=(0, 20))
 
         self.dropDownMonths.place(x=550, y=200)
         self.selectMonthButton.place(x=450, y=203)
