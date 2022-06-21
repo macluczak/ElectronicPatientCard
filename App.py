@@ -60,6 +60,7 @@ class App(tk.Tk):
 
 def main():
     app = App()
+    app.resizable(0, 0)
     app.mainloop()
 
 

@@ -9,11 +9,11 @@ class HomeFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         my_font = font.Font(family="Lato")
-        color_background = "#EDF2F4"
-        color_primary = "#D90429"
-        color_secondary = "#EF233C"
-        color_text = "#2B2D42"
-        color_special = "#8D99AE"
+        color_background = "#EDF2F4"  # light gray
+        color_primary = "#D90429"  # dark red
+        color_secondary = "#EF233C"  # red
+        color_text = "#2B2D42"  # light black
+        color_special = "#8D99AE"  # gray
 
         self.config(background=color_background)
         self.client = client
@@ -27,8 +27,12 @@ class HomeFrame(tk.Frame):
         self.logo = ImageTk.PhotoImage(self.image_resize)
 
         self.imageScope = Image.open('magnifier.png')
-        self.image_resize = self.imageScope.resize((30, 30), Image.ANTIALIAS)
+        self.image_resize = self.imageScope.resize((28, 28), Image.ANTIALIAS)
         self.scope = ImageTk.PhotoImage(self.image_resize)
+
+        self.imageUser = Image.open('user0.png')
+        self.image_resize = self.imageUser.resize((28, 28), Image.ANTIALIAS)
+        self.userIcon = ImageTk.PhotoImage(self.image_resize)
 
         self.imageScope = Image.open('love.png')
         self.image_resize = self.imageScope.resize((650, 650), Image.ANTIALIAS)
@@ -51,7 +55,7 @@ class HomeFrame(tk.Frame):
                                   fg="white",
                                   anchor="w")
 
-        self.filterButton = tk.Button(self,
+        self.searchButton = tk.Button(self,
                                       text="Search",
                                       font=(my_font, 10, 'bold'),
                                       compound='top',
@@ -61,26 +65,46 @@ class HomeFrame(tk.Frame):
                                       command=self.filter,
                                       background=color_secondary,
                                       activebackground=color_primary,
+                                      padx=3,
+                                      pady=3
                                       )
-        self.lastnameInput = tk.Entry(self,
+        self.nameInput = tk.Entry(self,
 
-                                      font=(my_font, 18, 'bold'),
-                                      fg=color_text
+                                  font=(my_font, 18, 'bold'),
+                                  fg=color_text
 
-                                      )
+                                  )
 
         self.background_label = tk.Label(self,
                                          background=color_background,
-                                         image=self.love)
+                                         image=self.love
+                                         )
 
-        self.title = tk.Label(self, text="SELECT PATIENT", font=('Helvetica bold', 40), background=color_background)
+        # self.title = tk.Label(self, text="SELECT PATIENT", font=('Helvetica bold', 40), background=color_background)
 
-        self.scrollbar = tk.Scrollbar(self, orient='vertical')
-        self.my_listbox = tk.Listbox(self, width=50, height=5, yscrollcommand=self.scrollbar.set)
+        self.scrollbar = tk.Scrollbar(self,
+                                      orient='vertical',
+                                      background=color_special,
+                                      )
 
-        self.infoButton = tk.Button(self, text="INFO", command=self.info)
+        self.my_listbox = tk.Listbox(self,
+                                     width=50,
+                                     height=5,
+                                     yscrollcommand=self.scrollbar.set)
 
-        self.scrollbar.config(command=self.my_listbox.yview)
+        self.detailButton = tk.Button(self,
+                                      text="Details",
+                                      command=self.detail,
+                                      background='white',
+                                      activebackground=color_special,
+                                      font=(my_font, 10, 'bold'),
+                                      compound='top',
+                                      fg=color_text,
+                                      activeforeground=color_background,
+                                      image=self.userIcon,
+                                      padx=3,
+                                      pady=3
+                                      )
 
         self.background_label.place(x=-250, y=120, width=650, height=650)
         self.nav_background.place(x=0, y=0, width=1200, height=120)
@@ -88,14 +112,15 @@ class HomeFrame(tk.Frame):
         self.nav_label.grid(row=0, column=0, sticky="w", columnspan=1)
 
         # self.title.grid(row=1, column=0, columnspan=2)
+        self.scrollbar.config(command=self.my_listbox.yview)
 
-        self.filterButton.grid(row=0, column=1, sticky='e', padx=10)
-        self.lastnameInput.grid(row=0, column=2, sticky='w')
+        self.searchButton.grid(row=0, column=1, sticky='e', padx=10)
+        self.nameInput.grid(row=0, column=2, sticky='w')
 
         self.my_listbox.grid(row=3, column=0, columnspan=3, pady=50)
         self.scrollbar.grid(row=3, column=1, sticky=tk.N + tk.S, pady=50)
 
-        self.infoButton.grid(row=4, column=0, columnspan=2, sticky= 'e', padx= 100)
+        self.detailButton.grid(row=4, column=0, columnspan=2, sticky='e', padx=100)
 
         self.patients = self.getPatientsNames(client)
         getFamilyName = lambda patient: patient['name'][0].family
@@ -108,7 +133,7 @@ class HomeFrame(tk.Frame):
         # patients = resources.fetch()
         return patients
 
-    def info(self):
+    def detail(self):
         selectedPatientName = str(self.my_listbox.get(tk.ANCHOR))
         if selectedPatientName == '':
             return
@@ -118,7 +143,7 @@ class HomeFrame(tk.Frame):
         self.parent.changeToPatientInfo(patient)
 
     def filter(self):
-        filterStr = self.lastnameInput.get()
+        filterStr = self.nameInput.get()
         filterNames = [name for name in self.patientNames if name.startswith(filterStr)]
         self.my_listbox.delete(0, tk.END)
         self.fillListBox(filterNames)
