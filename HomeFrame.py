@@ -29,6 +29,8 @@ class HomeFrame(tk.Frame):
         self.config(background=color_background)
         self.client = client
         self.parent = parent
+        self.search_var = tk.StringVar()
+        self.search_var.trace("w", self.update_list)
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -85,8 +87,8 @@ class HomeFrame(tk.Frame):
         self.nameInput = tk.Entry(self,
 
                                   font=font_LargeBolt,
-                                  fg=color_text
-
+                                  fg=color_text,
+                                  textvariable=self.search_var
                                   )
 
         self.background_label = tk.Label(self,
@@ -159,7 +161,17 @@ class HomeFrame(tk.Frame):
         self.patients = self.getPatientsNames(client)
         getFamilyName = lambda patient: patient['name'][0].family
         self.patientNames = [getFamilyName(patient) for patient in self.patients]
-        self.fillListBox(self.patientNames)
+        self.patientNames.sort()
+        self.update_list()
+
+    def update_list(self, *args):
+        search_term = self.search_var.get()
+
+        self.my_listbox.delete(0,'end')
+
+        for item in self.patientNames:
+            if search_term.lower() in item.lower():
+                self.my_listbox.insert('end', item)
 
     def getPatientsNames(self, client):
         resources = client.resources('Patient')
