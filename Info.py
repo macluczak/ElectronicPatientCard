@@ -56,6 +56,7 @@ class Info(tk.Frame):
 
         self.clicked = tk.StringVar(self)
         self.months = list(self.observationToDateDict.keys())
+        self.months.sort()
         self.clicked.set(self.months[0])
 
         self.background_label = tk.Label(self,

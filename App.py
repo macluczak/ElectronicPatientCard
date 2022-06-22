@@ -35,18 +35,7 @@ class App(tk.Tk):
 
         self.infoFrame = type('info.Info', (), {})
         self.homeFrame = hf.HomeFrame(self, self.client)
-
-
-        # self.homeFrame.pack(fill='both', expand=1)
         self.homeFrame.place(x=0, y=0, height= 675, width=1200)
-
-
-
-        # observationsResources = self.client.resources('Observation')
-        # observationsResources = observationsResources.search()
-        # self.observations = observationsResources.fetch()
-        # for observation in self.observations:
-        #     print(observation)
 
     def changeToPatientInfo(self, patient):
         self.infoFrame = info.Info(self, self.client, patient)
